@@ -111,3 +111,7 @@ sourceSets {
     }
 }
 
+task configCopy(type: Copy) {
+    from 'config'
+    into 'build/libs/config'
+}

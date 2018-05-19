@@ -29,14 +29,14 @@ import com.google.common.collect.Maps;
 public class RequestUtils {
 
     /**
-     * Form‚ğ—p‚¢‚ÄGET Request‚ğ‘—‚é
+     * Formã‚’ç”¨ã„ã¦GET Requestã‚’é€ã‚‹
      *
      * @param url
      *            Request URL
      * @param input
      *            Form
      * @param output
-     *            o—ÍƒNƒ‰ƒX
+     *            å‡ºåŠ›ã‚¯ãƒ©ã‚¹
      * @return O Response
      */
     public static <I, O> O get(String url, I input, Class<O> output) {
@@ -53,7 +53,7 @@ public class RequestUtils {
     }
 
     /**
-     * POJO Object‚ğMap‚É•ÏŠ·‚·‚é
+     * POJO Objectã‚’Mapã«å¤‰æ›ã™ã‚‹
      *
      * @param object
      *            POJO
@@ -79,10 +79,10 @@ public class RequestUtils {
     }
 
     /**
-     * URL, map‚©‚ç{@link UriComponents}‚ğæ“¾‚·‚é
+     * URL, mapã‹ã‚‰{@link UriComponents}ã‚’å–å¾—ã™ã‚‹
      *
      * @param url
-     *            HttpUrl‚Ü‚½‚Ípath
+     *            HttpUrlã¾ãŸã¯path
      * @param map
      *            GET Parameter
      * @return {@link UriComponents}

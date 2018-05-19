@@ -5,12 +5,12 @@ import java.security.SecureRandom;
 import org.apache.commons.lang.RandomStringUtils;
 
 public class StringUtils {
-    public static final String NG_WORD = "‚ñ";
+    public static final String NG_WORD = "ã‚“";
 
     private static String USE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 
     /**
-     * ƒJƒ^ƒJƒi‚ğ•½‰¼–¼‚É•ÏŠ·
+     * ã‚«ã‚¿ã‚«ãƒŠã‚’å¹³ä»®åã«å¤‰æ›
      *
      * @param s
      * @return
@@ -28,7 +28,7 @@ public class StringUtils {
     }
 
     /**
-     * ‚Ğ‚ç‚ª‚ÈˆÈŠO‚ªŠÜ‚Ü‚ê‚éê‡‚Í–³‹‚·‚éBÅŒã‚Ì•¶š‚ªu‚ñv‚Ìê‡‚à–³‹‚·‚é
+     * ã²ã‚‰ãŒãªä»¥å¤–ãŒå«ã¾ã‚Œã‚‹å ´åˆã¯ç„¡è¦–ã™ã‚‹ã€‚æœ€å¾Œã®æ–‡å­—ãŒã€Œã‚“ã€ã®å ´åˆã‚‚ç„¡è¦–ã™ã‚‹
      *
      * @return
      */

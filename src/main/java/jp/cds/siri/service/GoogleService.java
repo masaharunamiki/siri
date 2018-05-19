@@ -40,7 +40,7 @@ public class GoogleService {
     public String searchWord(String word) throws IOException {
         HttpSession session = initSession();
 
-        // ‘Šè‚Ì’PŒê‚ğ•ÛŠÇ‚·‚é
+        // ç›¸æ‰‹ã®å˜èªã‚’ä¿ç®¡ã™ã‚‹
         @SuppressWarnings("unchecked")
         Set<String> alreadyWord = (Set<String>) session.getAttribute(WORD_SESSION);
 
@@ -50,7 +50,7 @@ public class GoogleService {
         }
         alreadyWord.add(word);
 
-        // ƒXƒgƒŒ[ƒW‚©‚ç–¢g—p‚Ì’PŒê‚ğ’T‚·
+        // ã‚¹ãƒˆãƒ¬ãƒ¼ã‚¸ã‹ã‚‰æœªä½¿ç”¨ã®å˜èªã‚’æ¢ã™
         Word newWord = storageService.findByPrefix(surfix, alreadyWord);
         if (newWord != null) {
             return newWord.getWord();
@@ -60,7 +60,7 @@ public class GoogleService {
 
         for (CompleteSuggestion suggest : json) {
             String data = StringUtils.toHiragana(suggest.getSuggestion().getData());
-            // ‚Ğ‚ç‚ª‚ÈˆÈŠO‚ªŠÜ‚Ü‚ê‚éê‡‚Í–³‹‚·‚é
+            // ã²ã‚‰ãŒãªä»¥å¤–ãŒå«ã¾ã‚Œã‚‹å ´åˆã¯ç„¡è¦–ã™ã‚‹
             if (!StringUtils.checkHiragana(data)) {
                 continue;
             }
@@ -78,7 +78,7 @@ public class GoogleService {
     }
 
     /**
-     * GoogleSuggestApi‚ÉƒŠƒNƒGƒXƒg‚ğ“Š‚°‚é
+     * GoogleSuggestApiã«ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚’æŠ•ã’ã‚‹
      *
      * @param word
      * @return
@@ -93,7 +93,7 @@ public class GoogleService {
     }
 
     /**
-     * ƒZƒbƒVƒ‡ƒ“î•ñ‚ğ•Û‘¶
+     * ã‚»ãƒƒã‚·ãƒ§ãƒ³æƒ…å ±ã‚’ä¿å­˜
      *
      * @return
      */

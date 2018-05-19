@@ -21,7 +21,7 @@ public class StorageService {
     private WordRepository wordRepository;
 
     /**
-     * セッション情報の保管
+     * 繧ｻ繝�繧ｷ繝ｧ繝ｳ諠�蝣ｱ縺ｮ菫晉ｮ｡
      *
      * @param sessionId
      */
@@ -36,7 +36,7 @@ public class StorageService {
     }
 
     /**
-     * Googleから取得した単語情報を蓄積させる
+     * Google縺九ｉ蜿門ｾ励＠縺溷腰隱樊ュ蝣ｱ繧定塘遨阪＆縺帙ｋ
      *
      * @param word
      */

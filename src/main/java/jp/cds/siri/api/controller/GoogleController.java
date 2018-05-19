@@ -27,7 +27,7 @@ public class GoogleController {
     @Transactional(rollbackFor = Throwable.class)
     public String getContents(@RequestParam(name = "word", required = true) String word) throws IOException {
 
-        // Googleサジェスト検索をして単語を返す.
+        // Google繧ｵ繧ｸ繧ｧ繧ｹ繝域､懃ｴ｢繧偵＠縺ｦ蜊倩ｪ槭ｒ霑斐☆.
         return googleService.searchWord(word);
     }
 

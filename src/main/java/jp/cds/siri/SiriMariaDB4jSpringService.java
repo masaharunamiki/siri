@@ -1,6 +1,6 @@
-package jp.cds.siri.common.db;
+package jp.cds.siri;
 
-import java.io.File;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -8,17 +8,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
+import com.google.common.collect.Lists;
+
 import ch.vorburger.exec.ManagedProcessException;
 import ch.vorburger.mariadb4j.springframework.MariaDB4jSpringService;
 
+@Configuration
+@Profile("inmemory")
 public class SiriMariaDB4jSpringService extends MariaDB4jSpringService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private static final String BASE_PATH = "db/";
+    private static final String BASE_PATH = "db/migration/";
     private static final String DATA_SOURCE_NAME = "dataSource";
 
     @Autowired
@@ -27,21 +33,23 @@ public class SiriMariaDB4jSpringService extends MariaDB4jSpringService {
     @Override
     public void start() {
         super.start();
-        // スキーマ作成
+        // 繧ｹ繧ｭ繝ｼ繝樔ｽ懈��
         try {
-            db.createDB("siritori");
+            db.createDB("siri");
 
-            // DDLの読み込み
+            // DDL縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ
             DataSource dataSource = (DataSource) applicationContext.getBean(DATA_SOURCE_NAME);
             ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
 
-            ClassLoader classLoader = getClass().getClassLoader();
-            File dir = new File(classLoader.getResource(BASE_PATH).getFile());
-
-            for (File f : dir.listFiles()) {
-                logger.debug(String.format("Create table: %s", f.getName()));
-                databasePopulator.addScript(new ClassPathResource(BASE_PATH + f.getName()));
+            // TODO: 蜍慕噪縺ｫ蜿悶ｋ繧医≧縺ｫ縺吶ｋ
+            List<String> migrationFile = Lists.newArrayList();
+            migrationFile.add("V201805152300__create_database.sql");
+            migrationFile.add("V201805191800__add_index.sql");
+            for (String name : migrationFile) {
+                logger.debug(String.format("Create table: %s", name));
+                databasePopulator.addScript(new ClassPathResource(BASE_PATH + name));
             }
+
             DatabasePopulatorUtils.execute(databasePopulator, dataSource);
 
         } catch (final ManagedProcessException ex) {
