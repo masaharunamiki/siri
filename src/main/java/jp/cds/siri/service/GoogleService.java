@@ -43,13 +43,12 @@ public class GoogleService {
         // 相手の単語を保管する
         @SuppressWarnings("unchecked")
         Set<String> alreadyWord = (Set<String>) session.getAttribute(WORD_SESSION);
-        alreadyWord.add(word);
 
-        String prefix = word.substring(0, 1);
         String surfix = word.substring(word.length() - 1);
         if (StringUtils.toHiragana(surfix).equals(StringUtils.NG_WORD) || alreadyWord.contains(word)) {
             return "You Lose.";
         }
+        alreadyWord.add(word);
 
         // ストレージから未使用の単語を探す
         Word newWord = storageService.findByPrefix(surfix, alreadyWord);
@@ -57,7 +56,7 @@ public class GoogleService {
             return newWord.getWord();
         }
 
-        List<CompleteSuggestion> json = requestGoogleSuggenst(prefix);
+        List<CompleteSuggestion> json = requestGoogleSuggenst(surfix);
 
         for (CompleteSuggestion suggest : json) {
             String data = StringUtils.toHiragana(suggest.getSuggestion().getData());
@@ -78,7 +77,14 @@ public class GoogleService {
 
     }
 
-    private List<CompleteSuggestion> requestGoogleSuggenst(String word) throws IOException {
+    /**
+     * GoogleSuggestApiにリクエストを投げる
+     *
+     * @param word
+     * @return
+     * @throws IOException
+     */
+    public List<CompleteSuggestion> requestGoogleSuggenst(String word) throws IOException {
         Map<String, String> params = Maps.newHashMap();
         params.put("q", word);
         String response = RequestUtils.get(SEARCH_URI, params, String.class);
@@ -86,6 +92,11 @@ public class GoogleService {
         return json;
     }
 
+    /**
+     * セッション情報を保存
+     *
+     * @return
+     */
     private HttpSession initSession() {
         if (session.getAttribute(USER_SESSION) == null) {
             session.setAttribute(GoogleService.USER_SESSION, StringUtils.createRandomString(10));
@@ -93,5 +104,4 @@ public class GoogleService {
         }
         return session;
     }
-
 }
