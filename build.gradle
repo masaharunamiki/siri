@@ -1,0 +1,113 @@
+group "jp.cds"
+
+def JAR_NAME = "siri"
+
+buildscript {
+    ext {
+        springBootVersion = "1.5.12.RELEASE"
+    }
+    repositories {
+        mavenCentral()
+        maven {
+          url "https://plugins.gradle.org/m2/"
+        }
+        jcenter { url "http://jcenter.bintray.com" }
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "org.springframework:springloaded:1.2.6.RELEASE"
+    }
+}
+
+apply plugin: "spring-boot"
+apply plugin: "java"
+
+jar {
+    baseName = "${JAR_NAME}"
+}
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter { url "http://jcenter.bintray.com" }
+}
+configurations {
+    all*.exclude module : 'spring-boot-starter-logging'
+}
+
+ext['tomcat.version'] = '8.5.30'
+
+dependencies {
+    compile group:'org.apache.tomcat', name:'tomcat-juli', version:property('tomcat.version')
+    compile "org.projectlombok:lombok:1.16.8"
+    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-starter-aop"
+    compile "org.springframework.boot:spring-boot-starter-thymeleaf"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa"
+    compile "org.springframework.boot:spring-boot-configuration-processor"
+    compile "org.springframework.boot:spring-boot-starter-log4j2"
+    compile "org.springframework.boot:spring-boot-starter-websocket"
+    compile "org.modelmapper:modelmapper:0.7.6"
+    compile "org.flywaydb:flyway-core:4.0.3"
+    compile "mysql:mysql-connector-java:5.1.38"
+    compile "com.fasterxml.jackson.core:jackson-databind"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.6"
+    compile "com.google.guava:guava:19.0"
+    compile "org.apache.httpcomponents:httpclient:4.4.1"
+    compile "joda-time:joda-time:2.9.4"
+    compile "org.thymeleaf.extras:thymeleaf-extras-java8time:2.1.0.RELEASE"
+    compile "commons-io:commons-io:2.6"
+    compile "org.hibernate:hibernate-validator:5.2.4.Final"
+    compile "commons-logging:commons-logging:1.2"
+    compile "ch.vorburger.mariaDB4j:mariaDB4j:2.2.1"
+    compile ("org.mariadb.jdbc:mariadb-java-client:1.1.7") {
+        exclude group: 'net.java.dev.jna'
+    }
+    compile 'net.java.dev.jna:jna:4.2.2'
+    compile 'net.java.dev.jna:jna-platform:4.2.2'
+    compile "commons-collections:commons-collections:3.2.2"
+    compile 'org.apache.directory.studio:org.apache.commons.lang:2.6'
+    compile "com.fasterxml.jackson.dataformat:jackson-dataformat-xml"
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = "2.9"
+}
+
+apply plugin: "idea"
+idea {
+    module {
+        inheritOutputDirs = false
+        outputDir = file("$buildDir/classes/main/")
+    }
+}
+
+apply plugin: "eclipse"
+eclipse {
+    classpath {
+        downloadSources = true
+        downloadJavadoc = true
+        defaultOutputDir = file("build/classes")
+    }
+}
+
+bootRun {
+    addResources = true
+}
+
+springBoot {
+    executable = true
+}
+
+sourceSets {
+    main {
+        java {
+        }
+        resources {
+        	srcDirs = ['src/main/resources', 'src/main/java']
+        	exclude '**/*.java'
+        }
+    }
+}
+
